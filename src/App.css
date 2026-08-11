@@ -1,0 +1,832 @@
+* {
+  box-sizing: border-box;
+  }
+
+:root {
+font-family:
+-apple-system,
+BlinkMacSystemFont,
+"Segoe UI",
+"Noto Sans JP",
+sans-serif;
+
+color: #263238;
+background: #f5f7fa;
+}
+
+body {
+margin: 0;
+background: #f5f7fa;
+}
+
+button,
+input {
+font: inherit;
+}
+
+button {
+border: 0;
+}
+
+.app {
+min-height: 100vh;
+background: #f5f7fa;
+}
+
+/* =========================
+上部ポイントエリア
+========================= */
+
+.top-bar {
+background: linear-gradient(135deg, #4f8cff, #6da8ff);
+color: white;
+padding: 22px 20px 18px;
+box-shadow: 0 3px 12px rgba(50, 100, 180, 0.18);
+}
+
+.top-inner {
+max-width: 760px;
+margin: 0 auto;
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+
+.points-label {
+font-size: 13px;
+opacity: 0.85;
+margin-bottom: 3px;
+}
+
+.points-display {
+display: flex;
+align-items: center;
+gap: 5px;
+}
+
+.points-number {
+font-size: 36px;
+font-weight: 800;
+line-height: 1;
+}
+
+.points-unit {
+font-size: 15px;
+font-weight: 700;
+margin-top: 10px;
+}
+
+.settings-button {
+width: 44px;
+height: 44px;
+border-radius: 50%;
+background: rgba(255, 255, 255, 0.18);
+color: white;
+display: flex;
+justify-content: center;
+align-items: center;
+cursor: pointer;
+transition: 0.2s;
+}
+
+.settings-button:hover {
+background: rgba(255, 255, 255, 0.28);
+}
+
+.monthly-progress {
+max-width: 760px;
+margin: 18px auto 0;
+}
+
+.progress-info {
+display: flex;
+justify-content: space-between;
+font-size: 12px;
+margin-bottom: 7px;
+}
+
+.goal-complete {
+color: #fff;
+}
+
+.progress-track {
+width: 100%;
+height: 8px;
+background: rgba(255, 255, 255, 0.3);
+border-radius: 99px;
+overflow: hidden;
+}
+
+.progress-fill {
+height: 100%;
+background: white;
+border-radius: 99px;
+transition: width 0.3s ease;
+}
+
+/* =========================
+メイン
+========================= */
+
+.main {
+width: min(760px, calc(100% - 28px));
+margin: 0 auto;
+padding: 25px 0 50px;
+}
+
+section {
+margin-bottom: 27px;
+}
+
+.section-header {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-bottom: 10px;
+padding: 0 3px;
+}
+
+.section-title {
+display: flex;
+align-items: center;
+gap: 7px;
+font-size: 16px;
+font-weight: 800;
+}
+
+.section-title svg {
+color: #4f8cff;
+}
+
+.section-sub {
+color: #8b98a7;
+font-size: 12px;
+}
+
+/* =========================
+チャレンジ
+========================= */
+
+.challenge-list {
+display: flex;
+flex-direction: column;
+gap: 10px;
+}
+
+.challenge-group {
+background: white;
+border-radius: 14px;
+overflow: hidden;
+border: 1px solid #e8edf3;
+box-shadow: 0 2px 7px rgba(40, 60, 90, 0.05);
+}
+
+.challenge-category {
+padding: 8px 13px;
+font-size: 11px;
+font-weight: 800;
+background: #f1f5fa;
+color: #637286;
+}
+
+.challenge-items {
+display: flex;
+flex-direction: column;
+}
+
+.challenge-row {
+width: 100%;
+min-height: 55px;
+display: flex;
+align-items: center;
+gap: 10px;
+padding: 10px 13px;
+background: white;
+color: #263238;
+text-align: left;
+cursor: pointer;
+border-top: 1px solid #eef1f5;
+transition: 0.15s;
+}
+
+.challenge-row:first-child {
+border-top: 0;
+}
+
+.challenge-row:hover {
+background: #f8fbff;
+}
+
+.challenge-row.done {
+background: #f1f7ff;
+}
+
+.challenge-check {
+width: 20px;
+height: 20px;
+flex-shrink: 0;
+color: #aab5c1;
+}
+
+.challenge-row.done .challenge-check {
+color: #4f8cff;
+}
+
+.challenge-label {
+flex: 1;
+font-size: 14px;
+line-height: 1.45;
+}
+
+.challenge-row.done .challenge-label {
+color: #8793a0;
+text-decoration: line-through;
+}
+
+.point-badge {
+flex-shrink: 0;
+padding: 4px 9px;
+border-radius: 20px;
+background: #edf4ff;
+color: #4280ec;
+font-size: 12px;
+font-weight: 800;
+}
+
+/* カテゴリーごとのアクセント */
+
+.japanese .challenge-category {
+background: #fff3f3;
+color: #e06464;
+}
+
+.math .challenge-category {
+background: #f0f5ff;
+color: #527ddc;
+}
+
+.study .challenge-category {
+background: #f0faf5;
+color: #42a875;
+}
+
+.summer .challenge-category {
+background: #fff9e9;
+color: #d59b27;
+}
+
+.life .challenge-category {
+background: #f6f1ff;
+color: #8464c8;
+}
+
+.control .challenge-category {
+background: #edf8fa;
+color: #3d98a7;
+}
+
+.custom .challenge-category {
+background: #f2f3f5;
+color: #69727d;
+}
+
+/* =========================
+英単語
+========================= */
+
+.vocab-card {
+background: white;
+border: 1px solid #e8edf3;
+border-radius: 14px;
+padding: 17px;
+display: flex;
+align-items: center;
+gap: 18px;
+box-shadow: 0 2px 7px rgba(40, 60, 90, 0.05);
+}
+
+.vocab-left {
+flex: 1;
+}
+
+.vocab-description {
+font-size: 13px;
+color: #687686;
+margin-bottom: 10px;
+}
+
+.vocab-left .progress-track {
+background: #e8edf4;
+}
+
+.vocab-left .progress-fill {
+background: #4f8cff;
+}
+
+.vocab-buttons {
+display: flex;
+align-items: center;
+gap: 7px;
+}
+
+.minus-button,
+.plus-button {
+height: 38px;
+border-radius: 9px;
+cursor: pointer;
+font-weight: 800;
+}
+
+.minus-button {
+width: 38px;
+background: #f0f2f5;
+color: #6d7782;
+}
+
+.plus-button {
+padding: 0 13px;
+background: #4f8cff;
+color: white;
+}
+
+.minus-button:hover {
+background: #e5e8ec;
+}
+
+.plus-button:hover {
+background: #3e7bea;
+}
+
+/* =========================
+ご褒美
+========================= */
+
+.reward-list {
+background: white;
+border-radius: 14px;
+border: 1px solid #e8edf3;
+overflow: hidden;
+box-shadow: 0 2px 7px rgba(40, 60, 90, 0.05);
+}
+
+.reward-row {
+min-height: 62px;
+padding: 10px 14px;
+display: flex;
+align-items: center;
+justify-content: space-between;
+gap: 12px;
+border-bottom: 1px solid #eef1f5;
+}
+
+.reward-row:last-child {
+border-bottom: 0;
+}
+
+.reward-name {
+font-size: 14px;
+font-weight: 700;
+}
+
+.reward-points {
+color: #8a96a3;
+font-size: 12px;
+margin-top: 3px;
+}
+
+.redeem-button {
+padding: 8px 13px;
+border-radius: 9px;
+background: #4f8cff;
+color: white;
+font-size: 12px;
+font-weight: 800;
+cursor: pointer;
+}
+
+.redeem-button:hover {
+background: #3e7bea;
+}
+
+.short-text {
+color: #9aa4ae;
+font-size: 12px;
+white-space: nowrap;
+}
+
+/* =========================
+履歴
+========================= */
+
+.history-card {
+background: white;
+border-radius: 14px;
+border: 1px solid #e8edf3;
+overflow: hidden;
+box-shadow: 0 2px 7px rgba(40, 60, 90, 0.05);
+}
+
+.history-header {
+width: 100%;
+padding: 15px;
+background: white;
+display: flex;
+align-items: center;
+justify-content: space-between;
+color: #263238;
+font-weight: 800;
+cursor: pointer;
+}
+
+.history-header span {
+display: flex;
+align-items: center;
+gap: 7px;
+}
+
+.history-content {
+border-top: 1px solid #eef1f5;
+}
+
+.history-row {
+min-height: 45px;
+padding: 9px 15px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+gap: 15px;
+border-bottom: 1px solid #f0f2f5;
+font-size: 12px;
+}
+
+.history-row:last-child {
+border-bottom: 0;
+}
+
+.positive {
+color: #35a56c;
+}
+
+.negative {
+color: #e06a6a;
+}
+
+.history-empty,
+.empty-note {
+padding: 18px;
+text-align: center;
+color: #929ca7;
+font-size: 12px;
+}
+
+/* =========================
+ポイント獲得通知
+========================= */
+
+.celebrate {
+position: fixed;
+left: 50%;
+bottom: 25px;
+transform: translateX(-50%);
+z-index: 1000;
+
+display: flex;
+align-items: center;
+gap: 7px;
+
+padding: 11px 17px;
+border-radius: 99px;
+
+background: #263238;
+color: white;
+
+font-size: 13px;
+font-weight: 800;
+
+box-shadow: 0 7px 25px rgba(0, 0, 0, 0.2);
+
+animation: pop 0.25s ease;
+}
+
+@keyframes pop {
+from {
+opacity: 0;
+transform: translate(-50%, 10px) scale(0.9);
+}
+
+to {
+opacity: 1;
+transform: translate(-50%, 0) scale(1);
+}
+}
+
+/* =========================
+設定モーダル
+========================= */
+
+.modal-overlay {
+position: fixed;
+inset: 0;
+z-index: 900;
+
+display: flex;
+justify-content: center;
+align-items: center;
+
+padding: 20px;
+
+background: rgba(20, 30, 45, 0.45);
+backdrop-filter: blur(4px);
+}
+
+.settings-panel {
+width: min(680px, 100%);
+max-height: 88vh;
+overflow-y: auto;
+
+background: white;
+border-radius: 18px;
+
+box-shadow: 0 20px 60px rgba(20, 35, 60, 0.25);
+}
+
+.settings-top {
+height: 58px;
+padding: 0 17px;
+
+display: flex;
+align-items: center;
+justify-content: space-between;
+
+border-bottom: 1px solid #edf0f3;
+}
+
+.settings-top b {
+font-size: 17px;
+}
+
+.close-button {
+width: 35px;
+height: 35px;
+border-radius: 50%;
+background: #f0f2f5;
+color: #5f6974;
+
+display: flex;
+justify-content: center;
+align-items: center;
+
+cursor: pointer;
+}
+
+.settings-tabs {
+display: flex;
+overflow-x: auto;
+border-bottom: 1px solid #edf0f3;
+}
+
+.settings-tabs button {
+flex: 1;
+min-width: 75px;
+padding: 12px 8px;
+background: white;
+color: #8b96a2;
+font-size: 12px;
+font-weight: 700;
+cursor: pointer;
+}
+
+.settings-tabs button.active {
+color: #4f8cff;
+box-shadow: inset 0 -2px #4f8cff;
+}
+
+.settings-content {
+padding: 15px;
+}
+
+.setting-row {
+min-height: 48px;
+display: flex;
+align-items: center;
+gap: 8px;
+
+padding: 7px 0;
+border-bottom: 1px solid #f0f2f5;
+}
+
+.setting-row > span {
+flex: 1;
+font-size: 13px;
+line-height: 1.4;
+}
+
+.setting-row .inactive {
+color: #a7afb7;
+text-decoration: line-through;
+}
+
+.number-input {
+width: 60px;
+padding: 7px 6px;
+
+border: 1px solid #dce2e8;
+border-radius: 7px;
+
+text-align: center;
+outline: none;
+}
+
+.number-input:focus {
+border-color: #4f8cff;
+}
+
+.reward-number {
+margin-left: auto;
+}
+
+.setting-row small {
+color: #87919c;
+}
+
+.delete-button {
+width: 31px;
+height: 31px;
+
+display: flex;
+justify-content: center;
+align-items: center;
+
+border-radius: 7px;
+background: #fff1f1;
+color: #e36a6a;
+
+cursor: pointer;
+}
+
+.add-area {
+margin-top: 18px;
+padding: 15px;
+border-radius: 12px;
+background: #f5f8fc;
+}
+
+.add-title {
+margin-bottom: 9px;
+font-size: 12px;
+font-weight: 800;
+color: #667382;
+}
+
+.add-form {
+display: flex;
+gap: 7px;
+}
+
+.add-form input {
+min-width: 0;
+padding: 9px 10px;
+
+border: 1px solid #dce2e8;
+border-radius: 8px;
+outline: none;
+}
+
+.add-form input:first-child {
+flex: 1;
+}
+
+.add-form input:focus {
+border-color: #4f8cff;
+}
+
+.add-form button {
+width: 40px;
+border-radius: 8px;
+background: #4f8cff;
+color: white;
+
+display: flex;
+align-items: center;
+justify-content: center;
+
+cursor: pointer;
+}
+
+/* =========================
+スマホ対応
+========================= */
+
+@media (max-width: 600px) {
+.top-bar {
+padding: 18px 15px 16px;
+}
+
+.main {
+width: calc(100% - 20px);
+padding-top: 20px;
+}
+
+.points-number {
+font-size: 32px;
+}
+
+.section-title {
+font-size: 15px;
+}
+
+.challenge-label {
+font-size: 13px;
+}
+
+.vocab-card {
+flex-direction: column;
+align-items: stretch;
+}
+
+.vocab-buttons {
+justify-content: flex-end;
+}
+
+.reward-name {
+font-size: 13px;
+}
+
+.modal-overlay {
+padding: 10px;
+align-items: flex-end;
+}
+
+.settings-panel {
+max-height: 92vh;
+border-radius: 18px 18px 0 0;
+}
+
+.setting-row > span {
+font-size: 12px;
+}
+}
+/* =========================
+画面いっぱい表示・スマホ最適化
+========================= */
+
+html,
+body,
+#root {
+width: 100%;
+min-width: 100%;
+margin: 0;
+padding: 0;
+}
+
+body {
+overflow-x: hidden;
+}
+
+.app {
+width: 100%;
+min-height: 100vh;
+}
+
+/* スマホ */
+@media (max-width: 600px) {
+.main {
+width: 100%;
+padding-left: 10px;
+padding-right: 10px;
+}
+
+.top-bar {
+width: 100%;
+}
+
+.challenge-row {
+min-height: 58px;
+padding-left: 11px;
+padding-right: 11px;
+}
+
+.challenge-label {
+font-size: 13px;
+}
+
+.point-badge {
+padding: 5px 8px;
+font-size: 11px;
+}
+
+.section-header {
+padding-left: 2px;
+padding-right: 2px;
+}
+
+.vocab-card {
+width: 100%;
+}
+
+.reward-list,
+.history-card,
+.challenge-group {
+width: 100%;
+}
+}
