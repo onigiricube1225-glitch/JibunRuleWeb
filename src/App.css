@@ -1099,9 +1099,10 @@ width: 100%;
 }
 
 .splash-tagline {
-  margin-top: 12px;
-  font-size: 15px;
-  line-height: 1.8;
+  margin-top: 18px;
+  font-size: 14px;
+  line-height: 1.5;
+  white-space: nowrap;
   color: #667382;
 }
 
@@ -1111,3 +1112,4 @@ width: 100%;
   letter-spacing: 1.2px;
   color: #a0a8b2;
 }
+

@@ -282,6 +282,15 @@ function EmptyNote({ text }) {
 function App() {
  const [challenges, setChallenges] = useState(defaultChallenges)
  const [loaded, setLoaded] = useState(false)
+const [splashMinTime, setSplashMinTime] = useState(false)
+
+useEffect(() => {
+  const timer = setTimeout(() => {
+    setSplashMinTime(true)
+  }, 1200)
+
+  return () => clearTimeout(timer)
+}, [])
  const [rewards, setRewards] = useState(defaultRewards)
 
   const [dailyDone, setDailyDone] = useState({})
@@ -591,7 +600,7 @@ const data = {
     challenges.monthly.filter((challenge) => challenge.active)
   )
 
-  if (!loaded) {
+  if (!loaded || !splashMinTime) {
     return (
       <div className="splash-screen">
         <div className="splash-content">
@@ -1295,3 +1304,6 @@ setProblems((prev) => {
 }
 
 export default App
+
+
+
