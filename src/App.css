@@ -963,3 +963,34 @@ width: 100%;
     overflow: hidden;
   }
 }
+/* ���ǉ��t�H�[���E�X�}�z�œK�� */
+@media (max-width: 600px) {
+  .add-form {
+    display: grid;
+    grid-template-columns: 1fr 70px 40px;
+    gap: 8px;
+  }
+
+  .add-form input:first-child {
+    grid-column: 1 / -1;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .add-form input:nth-child(2) {
+    width: 70px;
+    min-width: 70px;
+    max-width: 70px;
+  }
+
+  .add-form input {
+    box-sizing: border-box;
+    min-height: 42px;
+    font-size: 16px;
+  }
+
+  .add-form button {
+    width: 40px;
+    min-height: 42px;
+  }
+}

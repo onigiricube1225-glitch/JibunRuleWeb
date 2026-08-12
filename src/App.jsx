@@ -43,6 +43,17 @@ const defaultChallenges = {
   ],
 }
 
+const defaultProblems = [
+  {
+    id: 'p1',
+    label: '英単語',
+    target: 300,
+    unit: '個',
+    points: 30,
+    active: true,
+  },
+]
+
 const defaultRewards = [
   { id: 'r1', label: 'お菓子・ジュース', points: 10 },
   { id: 'r2', label: '動画を1本見る', points: 15 },
@@ -277,8 +288,10 @@ function App() {
   const [weeklyDone, setWeeklyDone] = useState({})
   const [monthlyDone, setMonthlyDone] = useState({})
 
-  const [vocabLog, setVocabLog] = useState({})
-  const [transactions, setTransactions] = useState([])
+const [vocabLog, setVocabLog] = useState({})
+const [problems, setProblems] = useState(defaultProblems)
+const [problemLog, setProblemLog] = useState({})
+const [transactions, setTransactions] = useState([])
 
   const [showSettings, setShowSettings] = useState(false)
   const [showHistory, setShowHistory] = useState(false)
@@ -300,8 +313,10 @@ function App() {
       setDailyDone(data.dailyDone || {})
       setWeeklyDone(data.weeklyDone || {})
       setMonthlyDone(data.monthlyDone || {})
-      setVocabLog(data.vocabLog || {})
-      setTransactions(data.transactions || [])
+setVocabLog(data.vocabLog || {})
+setProblems(data.problems || defaultProblems)
+setProblemLog(data.problemLog || {})
+setTransactions(data.transactions || [])
     } catch (error) {
       console.error('データ読み込み失敗:', error)
     } finally {
@@ -311,15 +326,17 @@ function App() {
 useEffect(() => {
   if (!loaded) return
 
-  const data = {
-      challenges,
-      rewards,
-      dailyDone,
-      weeklyDone,
-      monthlyDone,
-      vocabLog,
-      transactions,
-    }
+const data = {
+  challenges,
+  rewards,
+  dailyDone,
+  weeklyDone,
+  monthlyDone,
+  vocabLog,
+  problems,
+  problemLog,
+  transactions,
+}
 
     localStorage.setItem(
       STORAGE_KEY,
@@ -332,9 +349,10 @@ useEffect(() => {
     weeklyDone,
     monthlyDone,
     vocabLog,
+    problems,
+    problemLog,
     transactions,
   ])
-
   const totalPoints = useMemo(() => {
     return transactions.reduce(
       (sum, transaction) => sum + transaction.points,
@@ -874,9 +892,11 @@ useEffect(() => {
       )}
 
       {showSettings && (
-        <SettingsPanel
-          challenges={challenges}
-          rewards={rewards}
+<SettingsPanel
+  challenges={challenges}
+  problems={problems}
+  setProblems={setProblems}
+  rewards={rewards}
           onClose={() => setShowSettings(false)}
           updateChallenge={updateChallenge}
           removeChallenge={removeChallenge}
@@ -892,6 +912,8 @@ useEffect(() => {
 
 function SettingsPanel({
   challenges,
+  problems,
+  setProblems,
   rewards,
   onClose,
   updateChallenge,
@@ -901,36 +923,67 @@ function SettingsPanel({
   removeReward,
   addReward,
 }) {
-  const [tab, setTab] = useState('daily')
-  const [newLabel, setNewLabel] = useState('')
-  const [newPoints, setNewPoints] = useState('')
 
-  const labels = {
-    daily: '毎日',
-    weekly: '毎週',
-    monthly: '毎月',
-    rewards: 'ご褒美',
-  }
+const [tab, setTab] = useState('daily')
+const [newLabel, setNewLabel] = useState('')
+const [newTarget, setNewTarget] = useState('')
+const [newUnit, setNewUnit] = useState('問')
+const [newPoints, setNewPoints] = useState('')
 
-  function submitAdd() {
-    if (!newLabel.trim()) return
+const labels = {
+  daily: '毎日',
+  weekly: '毎週',
+  monthly: '毎月',
+  problems: '問題',
+  rewards: 'ご褒美',
+}
 
-    if (tab === 'rewards') {
-      addReward(
-        newLabel.trim(),
-        newPoints
-      )
-    } else {
-      addChallenge(
-        tab,
-        newLabel.trim(),
-        newPoints
-      )
-    }
+function submitAdd() {
+  console.log('①追加ボタン押された')
+  console.log('②tab:', tab)
+  console.log('③newLabel:', newLabel)
+  console.log('④newTarget:', newTarget)
+  console.log('⑤newUnit:', newUnit)
+  console.log('⑥newPoints:', newPoints)
 
-    setNewLabel('')
-    setNewPoints('')
-  }
+  if (!newLabel.trim()) return
+
+  if (tab === 'rewards') {
+    addReward(
+      newLabel.trim(),
+      newPoints
+    )
+} else if (tab === 'problems') {
+  if (!newTarget || Number(newTarget) <= 0) return
+
+setProblems((prev) => {
+  const next = [
+    ...prev,
+    {
+      id: `p-${Date.now()}`,
+      label: newLabel.trim(),
+      target: Number(newTarget),
+      unit: newUnit,
+      points: Number(newPoints) || 0,
+      active: true,
+    },
+  ]
+
+  return next
+})
+} else {
+  addChallenge(
+    tab,
+    newLabel.trim(),
+    newPoints
+  )
+}
+
+  setNewLabel('')
+  setNewTarget('')
+  setNewUnit('問')
+  setNewPoints('')
+}
 
   return (
     <div className="modal-overlay">
@@ -963,8 +1016,9 @@ function SettingsPanel({
         </div>
 
         <div className="settings-content">
-          {tab !== 'rewards' &&
-            challenges[tab].map((challenge) => (
+{tab !== 'rewards' &&
+  tab !== 'problems' &&
+  challenges[tab].map((challenge) => (
               <div
                 className="setting-row"
                 key={challenge.id}
@@ -1027,44 +1081,136 @@ function SettingsPanel({
               </div>
             ))}
 
-          {tab === 'rewards' &&
-            rewards.map((reward) => (
-              <div
-                className="setting-row"
-                key={reward.id}
-              >
-                <span>
-                  {reward.label}
-                </span>
-
-                <input
-                  className="number-input reward-number"
-                  type="number"
-                  value={reward.points}
-                  onChange={(event) =>
-                    updateReward(
-                      reward.id,
-                      {
-                        points: Number(
-                          event.target.value
-                        ),
-                      }
-                    )
+{tab === 'problems' &&
+  problems.map((problem) => (
+    <div
+      className="setting-row"
+      key={problem.id}
+    >
+      <input
+        type="checkbox"
+        checked={problem.active}
+        onChange={(event) =>
+          setProblems((prev) =>
+            prev.map((item) =>
+              item.id === problem.id
+                ? {
+                    ...item,
+                    active: event.target.checked,
                   }
-                />
+                : item
+            )
+          )
+        }
+      />
 
-                <small>pt</small>
+      <span
+        className={
+          problem.active
+            ? ''
+            : 'inactive'
+        }
+      >
+        {problem.label}
+      </span>
 
-                <button
-                  className="delete-button"
-                  onClick={() =>
-                    removeReward(reward.id)
+      <input
+        className="number-input"
+        type="number"
+        value={problem.target}
+        onChange={(event) =>
+          setProblems((prev) =>
+            prev.map((item) =>
+              item.id === problem.id
+                ? {
+                    ...item,
+                    target: Number(
+                      event.target.value
+                    ),
                   }
-                >
-                  <Trash2 size={16} />
-                </button>
-              </div>
-            ))}
+                : item
+            )
+          )
+        }
+      />
+
+      <small>{problem.unit}</small>
+
+      <input
+        className="number-input"
+        type="number"
+        value={problem.points}
+        onChange={(event) =>
+          setProblems((prev) =>
+            prev.map((item) =>
+              item.id === problem.id
+                ? {
+                    ...item,
+                    points: Number(
+                      event.target.value
+                    ),
+                  }
+                : item
+            )
+          )
+        }
+      />
+
+      <small>pt</small>
+
+      <button
+        className="delete-button"
+        onClick={() =>
+          setProblems((prev) =>
+            prev.filter(
+              (item) => item.id !== problem.id
+            )
+          )
+        }
+      >
+        <Trash2 size={16} />
+      </button>
+    </div>
+  ))}
+
+{tab === 'rewards' &&
+  rewards.map((reward) => (
+    <div
+      className="setting-row"
+      key={reward.id}
+    >
+      <span>
+        {reward.label}
+      </span>
+
+      <input
+        className="number-input reward-number"
+        type="number"
+        value={reward.points}
+        onChange={(event) =>
+          updateReward(
+            reward.id,
+            {
+              points: Number(
+                event.target.value
+              ),
+            }
+          )
+        }
+      />
+
+      <small>pt</small>
+
+      <button
+        className="delete-button"
+        onClick={() =>
+          removeReward(reward.id)
+        }
+      >
+        <Trash2 size={16} />
+      </button>
+    </div>
+  ))}
 
           <div className="add-area">
             <div className="add-title">
@@ -1073,30 +1219,59 @@ function SettingsPanel({
                 : 'チャレンジを追加'}
             </div>
 
-            <div className="add-form">
-              <input
-                placeholder="内容"
-                value={newLabel}
-                onChange={(event) =>
-                  setNewLabel(event.target.value)
-                }
-              />
+<div className="add-form">
+  <input
+    placeholder={
+      tab === 'problems'
+        ? '問題名'
+        : '内容'
+    }
+    value={newLabel}
+    onChange={(event) =>
+      setNewLabel(event.target.value)
+    }
+  />
 
-              <input
-                placeholder="pt"
-                type="number"
-                value={newPoints}
-                onChange={(event) =>
-                  setNewPoints(event.target.value)
-                }
-              />
+  {tab === 'problems' && (
+    <>
+      <input
+        className="number-input"
+        placeholder="目標数"
+        type="number"
+        min="1"
+        value={newTarget}
+        onChange={(event) =>
+          setNewTarget(event.target.value)
+        }
+      />
 
-              <button
-                onClick={submitAdd}
-              >
-                <Plus size={18} />
-              </button>
-            </div>
+      <input
+        className="unit-input"
+        placeholder="単位"
+        value={newUnit}
+        onChange={(event) =>
+          setNewUnit(event.target.value)
+        }
+      />
+    </>
+  )}
+
+  <input
+    placeholder="pt"
+    type="number"
+    min="0"
+    value={newPoints}
+    onChange={(event) =>
+      setNewPoints(event.target.value)
+    }
+  />
+
+  <button
+    onClick={submitAdd}
+  >
+    <Plus size={18} />
+  </button>
+</div>
           </div>
         </div>
       </div>
