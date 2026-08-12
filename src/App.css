@@ -693,7 +693,16 @@ outline: none;
 }
 
 .add-form input:first-child {
-flex: 1;
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.add-form input:nth-child(2) {
+  flex: 0 0 60px;
+  width: 60px;
+  min-width: 60px;
+  max-width: 60px;
+  box-sizing: border-box;
 }
 
 .add-form input:focus {
