@@ -283,6 +283,8 @@ function App() {
   const [showSettings, setShowSettings] = useState(false)
   const [showHistory, setShowHistory] = useState(false)
 
+  const [activeTab, setActiveTab] = useState("today")
+
   const [celebrate, setCelebrate] = useState(null)
 
   useEffect(() => {
@@ -628,10 +630,10 @@ useEffect(() => {
         </div>
       </header>
 
-      <main className="main">
-        <section>
-          <SectionHeader
-            icon={<Sun size={17} />}
+<main className={`main tab-${activeTab}`}>
+  <section className="tab-section tab-daily">
+    <SectionHeader
+      icon={<Sun size={17} />}
             title="今日のチャレンジ"
             sub={formatDateJP()}
           />
@@ -653,7 +655,7 @@ useEffect(() => {
           </div>
         </section>
 
-        <section>
+        <section className="tab-section tab-daily">
           <SectionHeader
             icon={<Type size={17} />}
             title="英単語（今月）"
@@ -690,7 +692,7 @@ useEffect(() => {
           </div>
         </section>
 
-        <section>
+        <section className="tab-section tab-weekly">
           <SectionHeader
             icon={<Calendar size={17} />}
             title="今週のチャレンジ"
@@ -714,7 +716,7 @@ useEffect(() => {
           </div>
         </section>
 
-        <section>
+        <section className="tab-section tab-monthly">
           <SectionHeader
             icon={<Trophy size={17} />}
             title="今月のチャレンジ"
@@ -738,7 +740,7 @@ useEffect(() => {
           </div>
         </section>
 
-        <section>
+        <section className="tab-section tab-rewards">
           <SectionHeader
             icon={<Gift size={17} />}
             title="ご褒美と交換"
@@ -759,7 +761,7 @@ useEffect(() => {
           </div>
         </section>
 
-        <section className="history-card">
+        <section className="history-card tab-section tab-history">
           <button
             className="history-header"
             onClick={() =>
@@ -817,6 +819,49 @@ useEffect(() => {
           )}
         </section>
       </main>
+
+      <nav className="bottom-tab-bar">
+
+<button
+  className={`bottom-tab ${activeTab === "today" ? "active" : ""}`}
+  onClick={() => setActiveTab("today")}
+>
+  <Sun size={19} />
+  <span>今日</span>
+</button>
+
+<button
+  className={`bottom-tab ${activeTab === "weekly" ? "active" : ""}`}
+  onClick={() => setActiveTab("weekly")}
+>
+  <Calendar size={19} />
+  <span>毎週</span>
+</button>
+
+<button
+  className={`bottom-tab ${activeTab === "monthly" ? "active" : ""}`}
+  onClick={() => setActiveTab("monthly")}
+>
+  <Trophy size={19} />
+  <span>毎月</span>
+</button>
+
+<button
+  className={`bottom-tab ${activeTab === "rewards" ? "active" : ""}`}
+  onClick={() => setActiveTab("rewards")}
+>
+  <Gift size={19} />
+  <span>ご褒美</span>
+</button>
+
+<button
+  className={`bottom-tab ${activeTab === "history" ? "active" : ""}`}
+  onClick={() => setActiveTab("history")}
+>
+  <History size={19} />
+  <span>履歴</span>
+</button>
+      </nav>
 
       {celebrate && (
         <div className="celebrate">

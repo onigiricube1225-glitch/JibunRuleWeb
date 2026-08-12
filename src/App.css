@@ -839,3 +839,115 @@ width: 100%;
 width: 100%;
 }
 }
+
+/* =========================
+   スマホ用 下部タブバー
+========================= */
+
+.bottom-tab-bar {
+  display: none;
+}
+
+@media (max-width: 600px) {
+  .bottom-tab-bar {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1000;
+
+    height: 64px;
+    background: white;
+    border-top: 1px solid #e8edf3;
+    box-shadow: 0 -3px 12px rgba(40, 60, 90, 0.08);
+
+    display: flex;
+    justify-content: space-around;
+    align-items: stretch;
+  }
+
+  .bottom-tab {
+    flex: 1;
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 3px;
+
+    background: transparent;
+    color: #8b98a7;
+
+    cursor: pointer;
+    font-size: 10px;
+    font-weight: 700;
+  }
+
+  .bottom-tab.active {
+    color: #4f8cff;
+  }
+
+  .bottom-tab svg {
+    width: 19px;
+    height: 19px;
+  }
+
+  .main {
+    padding-bottom: 85px;
+  }
+}
+
+/* =========================
+   タブ切り替え
+========================= */
+
+@media (max-width: 600px) {
+  .main.tab-today .tab-section:not(.tab-daily),
+  .main.tab-weekly .tab-section:not(.tab-weekly),
+  .main.tab-monthly .tab-section:not(.tab-monthly),
+  .main.tab-rewards .tab-section:not(.tab-rewards),
+  .main.tab-history .tab-section:not(.tab-history) {
+    display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .main.tab-weekly .tab-section.tab-daily,
+  .main.tab-monthly .tab-section.tab-daily,
+  .main.tab-rewards .tab-section.tab-daily,
+  .main.tab-history .tab-section.tab-daily {
+    display: none !important;
+  }
+
+  .main.tab-today .tab-section.tab-weekly,
+  .main.tab-today .tab-section.tab-monthly,
+  .main.tab-today .tab-section.tab-rewards,
+  .main.tab-today .tab-section.tab-history {
+    display: none !important;
+  }
+
+  .main.tab-weekly .tab-section.tab-monthly,
+  .main.tab-weekly .tab-section.tab-rewards,
+  .main.tab-weekly .tab-section.tab-history {
+    display: none !important;
+  }
+
+  .main.tab-monthly .tab-section.tab-weekly,
+  .main.tab-monthly .tab-section.tab-rewards,
+  .main.tab-monthly .tab-section.tab-history {
+    display: none !important;
+  }
+
+  .main.tab-rewards .tab-section.tab-weekly,
+  .main.tab-rewards .tab-section.tab-monthly,
+  .main.tab-rewards .tab-section.tab-history {
+    display: none !important;
+  }
+
+  .main.tab-history .tab-section.tab-weekly,
+  .main.tab-history .tab-section.tab-monthly,
+  .main.tab-history .tab-section.tab-rewards {
+    display: none !important;
+  }
+}
