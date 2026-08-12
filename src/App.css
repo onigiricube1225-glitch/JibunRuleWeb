@@ -951,3 +951,15 @@ width: 100%;
     display: none !important;
   }
 }
+
+@media (max-width: 600px) {
+  .settings-content {
+    padding-bottom: 90px;
+  }
+}
+
+@media (max-width: 600px) {
+  body:has(.settings-panel) {
+    overflow: hidden;
+  }
+}
