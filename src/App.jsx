@@ -606,8 +606,7 @@ const data = {
         <div className="splash-content">
           <h1 className="splash-title">JibunRule</h1>
           <div className="splash-tagline">
-            自分で決めたルールを<br />
-            自分で守る。
+            自分で決めたルールを 自分で守る。
           </div>
           <div className="splash-loading">Loading...</div>
         </div>
@@ -1304,6 +1303,8 @@ setProblems((prev) => {
 }
 
 export default App
+
+
 
 
 
