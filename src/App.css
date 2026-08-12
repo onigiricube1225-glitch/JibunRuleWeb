@@ -1070,3 +1070,44 @@ width: 100%;
     width: 44px;
   }
 }
+/* =========================
+   起動画面
+========================= */
+
+.splash-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #ffffff;
+}
+
+.splash-content {
+  text-align: center;
+}
+
+.splash-title {
+  margin: 0;
+  font-size: 34px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  color: #222831;
+}
+
+.splash-tagline {
+  margin-top: 12px;
+  font-size: 15px;
+  line-height: 1.8;
+  color: #667382;
+}
+
+.splash-loading {
+  margin-top: 28px;
+  font-size: 11px;
+  letter-spacing: 1.2px;
+  color: #a0a8b2;
+}

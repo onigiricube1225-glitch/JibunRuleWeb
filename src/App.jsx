@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+﻿import { useEffect, useMemo, useState } from 'react'
 import {
   Star,
   Settings,
@@ -590,6 +590,21 @@ const data = {
   const monthlyGroups = groupAndOrder(
     challenges.monthly.filter((challenge) => challenge.active)
   )
+
+  if (!loaded) {
+    return (
+      <div className="splash-screen">
+        <div className="splash-content">
+          <h1 className="splash-title">JibunRule</h1>
+          <div className="splash-tagline">
+            自分で決めたルールを<br />
+            自分で守る。
+          </div>
+          <div className="splash-loading">Loading...</div>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="app">
